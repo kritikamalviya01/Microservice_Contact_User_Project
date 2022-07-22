@@ -1,0 +1,6 @@
+com\user\service\UserService.class
+com\user\service\UserServiceImpl.class
+com\user\entities\User.class
+com\user\entities\Contact.class
+com\user\controler\MyController.class
+com\user\UserServiceApplication.class
