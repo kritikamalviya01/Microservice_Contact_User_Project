@@ -1,0 +1,17 @@
+
+Server:
+  port: 9004
+
+Spring:
+  application:
+    name: hystrix-dashboard
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "*"
+
+management:
+  endpoint:
+    hystrix:
+      stream:
+        enabled: true
