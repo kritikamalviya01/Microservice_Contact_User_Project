@@ -6,9 +6,10 @@ eureka:
   instance:
     hostname: localhost
 
-Spring:
+
+spring:
   application:
-    name: Api-Gateway
+    name: Api_Gateway
   cloud:
     gateway:
       routes:
@@ -16,8 +17,37 @@ Spring:
           uri: lb://user-service
           predicates:
             - Path=/user/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: user-service
+                fallbackuri: forward:/userServiceFallback
 
-        - id: contact-service
+        - id: user-service
           uri: lb://contact-service
           predicates:
             - Path=/contact/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: contact-service
+                fallbackuri: forward:/contactServiceFallback
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+  endpoint:
+    hystrix:
+      stream:
+        enabled: true
